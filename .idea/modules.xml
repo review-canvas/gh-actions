@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gh-action.iml" filepath="$PROJECT_DIR$/gh-action.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gh-actions.iml" filepath="$PROJECT_DIR$/gh-actions.iml" />
     </modules>
   </component>
 </project>
