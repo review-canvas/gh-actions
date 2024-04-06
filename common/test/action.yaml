@@ -1,0 +1,21 @@
+name: Build test
+author: Taekmin Lee <hungrytech@gmail.com>
+description: Build test
+
+inputs:
+  build-text:
+    description: 'Build text'
+    required: true
+    type: string
+    default: 'Hello, World!'
+
+
+runs:
+  using: composite
+
+
+  steps:
+    - name: text echo
+      shell: bash
+      run: |
+        echo ${{ inputs.build-text }}
