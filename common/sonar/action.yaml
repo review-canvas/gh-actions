@@ -6,11 +6,10 @@ inputs:
     required: false
     type: number
     default: 0
-  owner:
-    description: 'is front or back'
+  token:
+    description: 'sonar token'
     required: true
     type: string
-    default: 'backend'
 
 runs:
   using: composite
@@ -22,14 +21,4 @@ runs:
       with:
         fetch-depth: ${{ inputs.fetch-depth }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_BAEKEND_TOKEN }}
-
-    - name: SonarCloud backend
-      if: ${{ inputs.owner == 'frontend' }}
-      uses: SonarSource/sonarcloud-github-action@master
-      with:
-        fetch-depth: ${{ inputs.fetch-depth }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_FRONTEND_TOKEN }}
+        SONAR_TOKEN: ${{ inputs.token }}
