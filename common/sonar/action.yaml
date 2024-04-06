@@ -1,4 +1,4 @@
-name: Sonar cloud build
+name: Sonar cloud setting
 
 inputs:
   fetch-depth:
@@ -15,7 +15,7 @@ runs:
   using: composite
 
   steps:
-    - name: SonarCloud backend
+    - name: SonarCloud setting
       if: ${{ inputs.owner == 'backend' }}
       uses: SonarSource/sonarcloud-github-action@master
       with:
