@@ -17,7 +17,7 @@ runs:
 
   steps:
     - name: SonarCloud backend
-      if: ${{inputs.owner == 'backend' }}
+      if: ${{ inputs.owner == 'backend' }}
       uses: SonarSource/sonarcloud-github-action@master
       with:
         fetch-depth: ${{ inputs.fetch-depth }}
@@ -26,7 +26,7 @@ runs:
         SONAR_TOKEN: ${{ secrets.SONAR_BAEKEND_TOKEN }}
 
     - name: SonarCloud backend
-      if: ${{inputs.owner == 'frontend' }}
+      if: ${{ inputs.owner == 'frontend' }}
       uses: SonarSource/sonarcloud-github-action@master
       with:
         fetch-depth: ${{ inputs.fetch-depth }}
