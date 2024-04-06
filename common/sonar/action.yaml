@@ -22,7 +22,7 @@ runs:
       with:
         fetch-depth: ${{ inputs.fetch-depth }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_BACKEND_TOKEN }}  # Needed to get PR information, if any
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_BAEKEND_TOKEN }}
 
     - name: SonarCloud backend
@@ -31,5 +31,5 @@ runs:
       with:
         fetch-depth: ${{ inputs.fetch-depth }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_FRONTEND_TOKEN }}  # Needed to get PR information, if any
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_FRONTEND_TOKEN }}
