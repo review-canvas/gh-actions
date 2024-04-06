@@ -9,6 +9,7 @@ inputs:
     description: 'jvm distribution'
     required: false
     type: string
+    default: 'temurin'
 
 runs:
   using: composite
