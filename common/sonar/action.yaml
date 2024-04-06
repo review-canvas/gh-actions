@@ -16,7 +16,6 @@ runs:
 
   steps:
     - name: SonarCloud setting
-      if: ${{ inputs.owner == 'backend' }}
       uses: SonarSource/sonarcloud-github-action@master
       with:
         fetch-depth: ${{ inputs.fetch-depth }}

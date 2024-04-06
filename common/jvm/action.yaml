@@ -1,0 +1,22 @@
+name: Jvm setting
+
+inputs:
+  version:
+    description: 'jvm setting'
+    required: true
+    type: number
+  distribution:
+    description: 'jvm distribution'
+    required: false
+    type: string
+
+runs:
+  using: composite
+
+  steps:
+    - name: Set up JDK ${{ inputs.version }}
+      uses: actions/setup-java@v4
+      with:
+        distribution: ${{ inputs.distribution }}
+        java-version: ${{ inputs.version }}
+        cache: 'gradle'
