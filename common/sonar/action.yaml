@@ -1,4 +1,4 @@
-name: Build
+name: Sonar cloud build
 
 inputs:
   fetch-depth:
