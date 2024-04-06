@@ -1,0 +1,20 @@
+name: Build
+
+inputs:
+  fetch-depth:
+    description: 'sonar cloud fetch depth'
+    required: false
+    type: number
+    default: 0
+
+runs:
+  using: composite
+
+  steps:
+    - name: SonarCloud
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        fetch-depth: ${{ inputs.fetch-depth }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
