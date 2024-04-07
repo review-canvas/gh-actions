@@ -5,6 +5,7 @@ description: Setup AWS CLI
 runs:
   using: composite
   steps:
+    # docs 참고 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
     - shell: bash
       run: |
         set -eux
