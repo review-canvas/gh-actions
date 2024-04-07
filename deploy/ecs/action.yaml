@@ -1,5 +1,5 @@
 name: Deploy service to ECS
-author: Hungry tech <hungrytech@gmail.com>
+author: hungrytech <hungrytech@gmail.com>
 description: Revision ECS Task Definition and Service Deploy
 
 inputs:
