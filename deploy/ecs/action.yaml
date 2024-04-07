@@ -1,0 +1,46 @@
+name: Deploy service to ECS
+author: Hungry tech <hungrytech@gmail.com>
+description: Revision ECS Task Definition and Service Deploy
+
+inputs:
+  services:
+    description: ECS service name
+    required: true
+    type: string
+  image:
+    description: Docker image url
+    required: true
+    type: string
+  ecs_cluster:
+    description: ECS cluster name
+    required: true
+    type: string
+  wait_for_service_stability:
+    description: Wait for service stability
+    required: false
+    type: boolean
+    default: false
+
+runs:
+  using: composite
+  steps:
+    - name: Download task definition
+      shell: bash
+      run: |
+        aws ecs describe-task-definition --task-definition ${{ inputs.services }} --query taskDefinition > task-definition.json
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+            task-definition: task-definition.json
+            container-name: ${{ inputs.services }}
+            image: ${{ inputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ inputs.services }}
+        cluster: ${{ inputs.ecs_cluster }}
+        wait-for-service-stability: ${{ inputs.wait_for_service_stability }}
