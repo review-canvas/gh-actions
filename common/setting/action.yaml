@@ -1,0 +1,15 @@
+name: Setup AWS CLI
+author: hungrytech <hungrytech@gmail.com>
+description: Setup AWS CLI
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -eux
+        cd "$(mktemp -d)"
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install --update
+        aws --version
