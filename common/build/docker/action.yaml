@@ -12,6 +12,10 @@ inputs:
     required: false
     type: string
     default: Dockerfile
+  project:
+    description: Project name
+    required: true
+    type: string
   extra_build_args:
     description: Extra build arguments
     required: false
@@ -37,7 +41,7 @@ runs:
       run: |
         docker build -f ${GITHUB_WORKSPACE}/${{ inputs.dockerfile }} . \
           --tag ${{steps.login-ecr.outputs.registry}}/${{inputs.repository}}:latest \
-          --tag ${{steps.login-ecr.outputs.registry}}/${{inputs.repository}}:${{ github.sha }} \
+          --tag ${{steps.login-ecr.outputs.registry}}/${{inputs.repository}}:${{ github.sha }}-${{ inputs.project }} \
             ${{ inputs.extra_build_args }}
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }} --all-tags
         echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}:${{ github.sha }}" >> $GITHUB_OUTPUT
