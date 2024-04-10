@@ -44,4 +44,4 @@ runs:
           --tag ${{steps.login-ecr.outputs.registry}}/${{inputs.repository}}:${{ github.sha }}-${{ inputs.project }} \
             ${{ inputs.extra_build_args }}
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }} --all-tags
-        echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}:${{ github.sha }}" >> $GITHUB_OUTPUT
+        echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}:${{ github.sha }}-${{ inputs.project }}" >> $GITHUB_OUTPUT
