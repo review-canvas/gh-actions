@@ -1,0 +1,44 @@
+name: Build and push docker image
+author: hungrytech <hungrytech@gmail.com>
+description: Build and push docker image to ECR
+
+inputs:
+  repository:
+    description: ECR repository name
+    required: true
+    type: string
+  dockerfile:
+    description: Dockerfile path
+    required: false
+    type: string
+    default: Dockerfile
+  extra_build_args:
+    description: Extra build arguments
+    required: false
+    type: string
+
+
+outputs:
+  image:
+    description: ECR image url
+    value: ${{ steps.build-image.outputs.image }}
+
+
+runs:
+  using: composite
+  steps:
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      uses: aws-actions/amazon-ecr-push-image@v2
+      shell: bash
+      run: |
+        docker build -f ${GITHUB_WORKSPACE}/${{ inputs.dockerfile }} . \
+          --tag ${{steps.login-ecr.outputs.registry}}/${{inputs.repository}}:latest \
+          --tag ${{steps.login-ecr.outputs.registry}}/${{inputs.repository}}:${{ github.sha }} \
+            ${{ inputs.extra_build_args }}
+        docker push ${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }} --all-tags
+        echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}:${{ github.sha }}"
