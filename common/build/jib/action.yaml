@@ -37,18 +37,11 @@ runs:
 
     - name: "JIB Build and push image to Amazon ECR"
       id: build-image
-      if: ${{ inputs.with_test }}
       shell: bash
       run: |
-        ECR_URI="${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}" |
-        ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }}
-        echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.respository }}:${{ github.sha }}" >> $GITHUB_OUTPUT
-
-    - name: "JIB Build and push image to Amazon ECR if not test"
-      id: build-image
-      if: ${{ !inputs.with_test }}
-      shell: bash
-      run: |
-        ECR_URI="${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}" |
-        ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }} -x test
+        if [[ ${{ inputs.with_test }} == true ]]; then
+          ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }}
+        else
+          ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }} -x test
+        fi
         echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.respository }}:${{ github.sha }}" >> $GITHUB_OUTPUT
