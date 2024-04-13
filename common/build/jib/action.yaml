@@ -1,0 +1,52 @@
+name: 'JIB Build and push docker image'
+author: hungrytech <hungrytech@gmail.com>
+description: Build and push docker image to ECR using JIB
+
+inputs:
+  target_module:
+    description: Target module name
+    required: true
+    type: string
+  with_test:
+    description: Build with test
+    required: false
+    type: boolean
+    default: false
+  repsoitory:
+    description: ECR repository name
+    required: true
+    type: string
+  tags:
+    description: Tag for image
+    required: true
+    type: string
+
+
+outputs:
+  image:
+    description: ECR image url
+    value: ${{ steps.build-image.outputs.image }}
+
+
+runs:
+  using: composite
+  steps:
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: "JIB Build and push image to Amazon ECR"
+      id: build-image
+      if: ${{ inputs.with_test }}
+      shell: bash
+      run: |
+        ECR_URI="${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}" |
+        ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }}
+
+    - name: "JIB Build and push image to Amazon ECR if not test"
+      id: build-image
+      if: ${{ !inputs.with_test }}
+      shell: bash
+      run: |
+        ECR_URI="${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}" |
+        ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }} -x test
