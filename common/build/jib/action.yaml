@@ -42,7 +42,7 @@ runs:
       run: |
         ECR_URI="${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}" |
         ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }}
-        echo "image=${{ stepes.login-ecr.outputs.registry }}/${{ inputs.respository }}:${{ github.sha }}" >> $GITHUB_OUTPUT
+        echo "image=${{ steps.login-ecr.outputs.registry }}/${{ inputs.respository }}:${{ github.sha }}" >> $GITHUB_OUTPUT
 
     - name: "JIB Build and push image to Amazon ECR if not test"
       id: build-image
