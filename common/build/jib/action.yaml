@@ -44,7 +44,7 @@ runs:
       id: build-image
       shell: bash
       run: |
-        ECR_URI='${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}' \
+        ECR_URI='${{ steps.login-ecr.outputs.registry }}/${{ inputs.repository }}'; \
         if [[ ${{ inputs.with_test }} == true ]]; then
           ./gradlew :${{ inputs.target_module }}:jib -Djib-tag=${{ inputs.tags }}
         else
