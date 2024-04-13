@@ -3,6 +3,11 @@ author: hungrytech <hungrytech@gmail.com>
 description: Build and push docker image to ECR using JIB
 
 inputs:
+  builds_env:
+    description: Build environment
+    required: false
+    type: string
+    default: ""
   target_module:
     description: Target module name
     required: true
