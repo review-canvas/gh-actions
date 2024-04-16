@@ -19,7 +19,7 @@ inputs:
     description: Wait for service stability
     required: false
     type: boolean
-    default: false
+    default: true
 
 runs:
   using: composite
